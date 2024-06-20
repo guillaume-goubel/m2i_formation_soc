@@ -80,13 +80,17 @@
 # if sub > 0:
 #     print(f"Pièces de 1 : {sub}")
 
-# !! ---------- Exercice Table -------------
+# !! ---------- Exercice Table de multiplication -------------
 number = int(input("multiplication jusque ? >> "))
+longueur = len(str(number * number))
 
-
-
-
-
+for i in range(1, number +1):
+    
+    ligne = ""
+    for j in range(1, number +1):
+        space = longueur - len(str(j * i))
+        ligne += str(f"{j * i} {' ' * space}")
+    print(ligne + "\n")
 
 
 
