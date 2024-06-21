@@ -27,7 +27,7 @@
 #     print(f"{number} X {i} = {number*i} ")
 
 # !! ---------- Exercice 5 -------------
-# plus_grand = 0
+# plus_grand = None
 
 # for i in range(20):
 #     number = int(input("nombre ? >> "))
@@ -49,13 +49,13 @@
 # print(f"Le chiffre est {plus_grand} qui se situe à la position {position} ")
 
 # !! ---------- Exercice 8 -------------
-# number = int(input("nombre ? >> "))
-# total = 1
+# number = abs(int(input("nombre ? >> ")))
+# sum = 0
 
 # for i in range(1, number + 1):
-#     total *= i
+#     sum *= i
 
-# print(total)
+# print(sum)
 
 # !! ---------- Exercice 9 -------------
 # total = 0
@@ -73,27 +73,31 @@
 
 # if sub // 10 > 0:
 #     print(f"Billets 10 : {sub // 10}")
-#     sub -= sub // 10 * 10
+#     # sub -= sub // 10 * 10
+#     sub = sub % 10
 # if sub // 5 > 0:
 #     print(f"Billets 5 : {sub // 5}")
-#     sub -= sub // 5 * 5
+#      # sub -= sub // 5 * 5
+#     sub = sub % 5
 # if sub > 0:
 #     print(f"Pièces de 1 : {sub}")
 
 # !! ---------- Exercice Table de multiplication -------------
-number = int(input("multiplication jusque ? >> "))
-longueur = len(str(number * number))
+# number = int(input("multiplication jusque ? >> "))
+# longueur = len(str(number * number))
 
-for i in range(1, number +1):
+# for i in range(1, number +1):
     
-    ligne = ""
-    for j in range(1, number +1):
-        space = longueur - len(str(j * i))
-        ligne += str(f"{j * i} {' ' * space}")
-    print(ligne + "\n")
+#     ligne = ""
+#     for j in range(1, number +1):
+#         space = longueur - len(str(j * i))
+#         ligne += str(f"{j * i} {' ' * space}")
+#     print(ligne + "\n")
 
+# !! ---------- Pyramide -------------
+# height = int(input("hauteur ? >> "))
 
-
-
-
-
+# for i in range(1, height+1):
+#     spaces =  " " * ( height - i )
+#     stars = "*" * ( 2 * i - 1 )
+#     print(spaces + stars )
