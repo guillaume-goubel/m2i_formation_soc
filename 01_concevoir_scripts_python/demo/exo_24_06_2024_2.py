@@ -154,25 +154,31 @@ def log_in_view(response:list):
 
 def log_counter(data):
     
+    main_response = {}
     log_types = ('ERROR', 'INFO', 'WARNING')
-    counter = 0
-
-    for log in data:
-
-        print(log)
-
-
-        for log_type in log_types:
-            # if log_type == 
-            pass
     
-    # main_response = {
-    #     "data": [],
-    #     "count" : 0
-    # }
+    for log_type in log_types:
+        main_response[log_type] = {
+            "type" : log_type,
+            "total" : 0
+        }
+
+    print(main_response)
+
+    for type in main_response:
+        # print(type)
+
+        counter = 0
+        for logs in data:
+            # print(logs)
+            if type == logs['log_code']:
+                counter += 1
+        
+        print(counter)
+        #!!! TO DO
 
 filtrer_logs(data)
-
+log_counter(data)
 
 
 
