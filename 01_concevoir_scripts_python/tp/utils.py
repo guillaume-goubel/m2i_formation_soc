@@ -1,5 +1,6 @@
 # IMPORT
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # DATA 
 log_file_to_read = "log_file.txt"
@@ -7,56 +8,69 @@ log_file_to_read = "log_file.txt"
 # FUNCTIONs
 def read_log_file(file_to_read):
 
-    df = pd.read_csv(file_to_read, delimiter=',')
-    df.columns = ['datetime', 'username', 'ip', 'action', 'result']
-    df_str = df.to_string(index=False)
-    return df_str
+    df = pd.read_csv(file_to_read, delimiter=',', names=["timestamp", "user", "ip_address", "action", "status"])
+    return df
 
-# Extraites les tentatives de connexion échouées
 def failed_attempt(file_to_read):
 
-    df = pd.read_csv(file_to_read, delimiter=',', header=None)
-    df.columns = ['datetime', 'username', 'ip', 'action', 'result']
-    failed_logs = df[df['result'].str.contains('FAILED')]
-
+    df = pd.read_csv(file_to_read, delimiter=',', header=None, names=["timestamp", "user", "ip_address", "action", "status"])
+    failed_logs = df[df['status'].str.contains('FAILED')]
     return failed_logs
 
-def get_many_ip_failed_attempt(file_to_read):
+def get_many_ip_failed_attempt(file_to_read, multiple_attempts=False, number_attempts=False):
+
+    # Lire les données de log dans un DataFrame pandas
+    log_df = pd.read_csv(file_to_read, header=None, names=["timestamp", "user", "ip_address", "action", "status"])
+
+    # Supprimer les espaces en trop dans la colonne 'status'
+    log_df['status'] = log_df['status'].str.strip()
+
+    # Filtrer les tentatives échouées
+    failed_attempts = log_df[log_df['status'] == 'FAILED']
+
+    # Grouper par adresse IP et calculer le nombre de tentatives échouées, la première et la dernière tentative
+    report_df = failed_attempts.groupby('ip_address').agg(
+        ko_attempts=('ip_address', 'size'),
+        first=('timestamp', 'min'),
+        last=('timestamp', 'max')
+    ).reset_index()
     
-    df = pd.read_csv(file_to_read, header=None)
-    df.columns = ['datetime', 'username', 'ip', 'action', 'result']
+    if multiple_attempts :
+        report_df = report_df[report_df['ko_attempts'] > int(number_attempts)]
 
-    # Convertir la colonne 'datetime' en format datetime
-    df['datetime'] = pd.to_datetime(df['datetime'])
-    df_sorted = df.sort_values(by='datetime')
+    # Afficher le rapport sous forme de tableau
+    return report_df
+
+def get_graph(report_df):
     
-    # Filtrer les lignes où la colonne 'result' contient 'FAILED'
-    # failed_attempts = df_sorted[df['result'].str.contains('FAILED')]
+    # Créer un graphique des tentatives échouées par adresse IP
+    plt.figure(figsize=(20, 12))
+    plt.bar(report_df['ip_address'], report_df['ko_attempts'], color='skyblue')
+    plt.xlabel('Adresse IP')
+    plt.ylabel('Nombre de tentatives échouées')
+    plt.title('Nombre de tentatives échouées par adresse IP')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
 
-    # # Compter le nombre de tentatives échouées par adresse IP
-    # failed_attempts_count = failed_attempts['result'].value_counts()
-
-    # # # Identifier les adresses IP avec des tentatives échouées répétées (plus d'une fois)
-    # repeated_failed_attempts = failed_attempts_count[failed_attempts_count > 1]
-
-    # # Convertir les adresses IP en une liste
-    # repeated_failed_attempts_list = repeated_failed_attempts.index.tolist()
-
-    # # transform_string_array(repeated_failed_attempts_list, file_to_read)
-    # return repeated_failed_attempts_list
-
-
-# def sort_by_date(file_path):
-#     # Lire le fichier texte en tant que DataFrame
-#     df = pd.read_csv(file_path, header=None)
-
-#     df.columns = ['datetime', 'username', 'ip', 'action', 'result']
-
-#     # Convertir la colonne 'datetime' en format datetime
-#     df['datetime'] = pd.to_datetime(df['datetime'])
-
-#     # Trier par date (colonne 'datetime')
-#     df_sorted = df.sort_values(by='datetime')
-
-#     # Afficher le DataFrame trié
-#     print(df_sorted)
+    # Afficher le graphique
+    plt.show()
+    
+def create_alert_message_graph(report_df):
+    
+        # Itérer sur les lignes du DataFrame
+    for index, row in report_df.iterrows():
+        # Manipuler chaque ligne comme un Series pandas
+        ip_address = row['ip_address']
+        ko_attempts = row['ko_attempts']
+        first_attempt = row['first']
+        last_attempt = row['last']
+        
+        # Créer un message d'alerte basé sur les données de la ligne
+        alert_message = (
+            f"IP Address: {ip_address}\n"
+            f"Failed Attempts: {ko_attempts}\n"
+            f"First Attempt: {first_attempt}\n"
+            f"Last Attempt: {last_attempt}\n"
+        )
+        print(alert_message) 
+    
