@@ -22,17 +22,18 @@ while True:
             print(response) 
             
         case '3':
-            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=True, number_attempts=1).to_string(index=False)
+            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=True, threshold=1).to_string(index=False)
             print(response)
             
         case '4':
-            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=False, number_attempts=False)
+            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=False, threshold=False)
             utils.get_graph(response)
             
         case '5':
-            alert_level_choice = input("Quel niveau d'alerte voulez-vous tester ? >>")
-            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=True, number_attempts=alert_level_choice)
-            utils.create_alert_message_graph(response)
+            alert_level_choice = input("Quel seuil d'alerte voulez-vous tester ? >> ")
+            response = utils.get_many_ip_failed_attempt(utils.log_file_to_read, multiple_attempts=True, threshold=alert_level_choice)
+            for alert in utils.create_alert_message(response):
+                print(alert)
             
         case _:
             break
