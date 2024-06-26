@@ -6,21 +6,21 @@ import matplotlib.pyplot as plt
 log_file_to_read = "logs_file.txt"
 
 # FUNCTIONs
-def read_log_file(file_to_read):
+def read_log_file():
 
-    df = pd.read_csv(file_to_read, delimiter=',', names=["timestamp", "user", "ip_address", "action", "status"])
+    df = pd.read_csv(log_file_to_read, delimiter=',', names=["timestamp", "user", "ip_address", "action", "status"])
     return df
 
-def failed_attempt(file_to_read):
+def failed_attempt():
 
-    df = pd.read_csv(file_to_read, delimiter=',', header=None, names=["timestamp", "user", "ip_address", "action", "status"])
+    df = pd.read_csv(log_file_to_read, delimiter=',', header=None, names=["timestamp", "user", "ip_address", "action", "status"])
     failed_logs = df[df['status'].str.contains('FAILED')]
     return failed_logs
 
-def get_many_ip_failed_attempt(file_to_read, multiple_attempts=False, threshold=False):
+def get_many_ip_failed_attempt(multiple_attempts=False, threshold=False):
 
     # Lire les données de log dans un DataFrame pandas
-    log_df = pd.read_csv(file_to_read, header=None, names=["timestamp", "user", "ip_address", "action", "status"])
+    log_df = pd.read_csv(log_file_to_read, header=None, names=["timestamp", "user", "ip_address", "action", "status"])
 
     # Supprimer les espaces en trop dans la colonne 'status'
     log_df['status'] = log_df['status'].str.strip()
@@ -69,7 +69,8 @@ def create_alert_message(report_df):
         
         # Créer un message d'alerte basé sur les données de la ligne
         alert_message = (
-            f"ALERT----############################################################\n\n"
+            f"############################################################\n\n"
+            f"-----------------------------ALERT----------------------------\n"
             f"Subject: Security Alert - Multiple Failed Login Attempts Detected\n"
             f"ALERT: Multiple failed login attempts detected from IP address: {ip_address}\n"
             f"Number of Failed Attempts: {ko_attempts}\n"
@@ -79,7 +80,6 @@ def create_alert_message(report_df):
             f"Potential security breach attempt. Ensure that the IP address is blocked and review access logs for any further anomalies.\n\n"
             f"Best regards,\n"
             f"Security Team\n"
-            f"#################################################################\n"
         )
         alerts.append(alert_message)
         

@@ -37,33 +37,73 @@ def create_temp_logs_file():
         print('no logs file te read')
 
 # FUNCTIONs
-def read_log_file(log_file):
-    df = pd.read_csv(log_file, delimiter=',', names=["port", "service", "status"])
+def read_log_file():
+    df = pd.read_csv(log_file_temp, delimiter=',', names=["port", "service", "status"])
     return df
 
 def check_security_choice(check_choice):
    
     if check_choice == '-s' or check_choice == 'service':
-        return check_security_service(log_file_temp)
+        return check_security_service()
     elif check_choice == '-p' or check_choice == 'port':
-        return check_security_port(log_file_temp)
+        return check_security_port()
     else:
         print("Le choix n'est pas correct : service ou -s / port ou -p ")
 
     
-def check_security_service(log_file_to_read):
+def check_security_service():
     
-    report_df = pd.read_csv(log_file_to_read, delimiter=',', names=["port", "service", "status"])
-    report_df['service'] = report_df['service'].str.strip()
-    report_df = report_df[~report_df['service'].isin(standard_services)]
+    data = pd.read_csv(log_file_temp, delimiter=',', names=["port", "service", "status"])
+    data['service'] = data['service'].str.strip()
+    data = data[~data['service'].isin(standard_services)]
     
-    return report_df
+    return data
 
-def check_security_port(log_file_to_read):
+def check_security_port():
     
-    report_df = pd.read_csv(log_file_to_read, delimiter=',', names=["port", "service", "status"], dtype={"port": str})
-    report_df['port'] = report_df['port'].str.strip()
-    report_df = report_df[~report_df['port'].isin(standard_ports)]
+    data = pd.read_csv(log_file_temp, delimiter=',', names=["port", "service", "status"], dtype={"port": str})
+    data['port'] = data['port'].str.strip()
+    data = data[~data['port'].isin(standard_ports)]
     
-    return report_df
+    return data
+
+def create_alert_message(data):
+
+    alerts= []
+    
+    # Itérer sur les lignes du DataFrame
+    for index, row in data.iterrows():
+        
+        priority = ""
+        port = row['port']
+        service = row['service']
+        status = row['status']
+    
+        if status.strip() == 'active':
+            priority = "---------------------HIGH PRIORITY-------------------------"
+ 
+        alert_message = (
+            f"############################################################\n"
+            f"{priority}\n\n"
+            f"Subject: Security Alert - Non-Standard Service Detected\n"
+            f"ALERT: A non-standard service has been detected on port: {port}\n"
+            f"Service: {service}\n"
+            f"Status: {status}\n\n"
+            f"Immediate action is required. Please investigate the suspicious activity related to this service.\n"
+            f"Ensure that the service {row.service} is verified and review access logs for any further anomalies.\n\n"
+            f"Best regards,\n"
+            f"Security Team\n"
+        )
+        
+        alerts.append(alert_message)
+        
+    return alerts
+
+def create_report(type=False):
+    if type == "service":
+        data = check_security_service()
+        return create_alert_message(data)
+    else:
+        data = check_security_port()
+        return create_alert_message(data)
 
