@@ -42,7 +42,6 @@ def get_many_ip_failed_attempt(multiple_attempts=False, threshold=False):
     return report_df
 
 def get_graph(report_df):
-    
     # Créer un graphique des tentatives échouées par adresse IP
     plt.figure(figsize=(20, 12))
     plt.bar(report_df['ip_address'], report_df['ko_attempts'], color='skyblue')
@@ -52,9 +51,11 @@ def get_graph(report_df):
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    # Afficher le graphique
-    plt.show()
-    
+    # Sauvegarder le graphique dans un fichier
+    output_file = 'failed_attempt_ip_connexions.png'
+    plt.savefig(output_file)
+    print(f"Le graphique a été sauvegardé dans le fichier : {output_file}")
+
 def create_alert_message(report_df):
     
     alerts= []

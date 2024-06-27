@@ -53,9 +53,15 @@ data = read_log_file(logs_file)
 
 while True:
     threats_detected = check_threats(data, suspect_signatures)
+
+    # Transformer la liste en une chaîne de caractères
+    body_message = ""
+    for entry in threats_detected:
+        body_message += f"{entry[0]} - {entry[1]} \\\n"
+
+    send_email(body_message)
     save_threats_to_file(threats_detected, output_file)
-    send_email()
-    
+
     time.sleep(3)
     print("------Scanning on progress-------")
     time.sleep(7)

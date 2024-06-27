@@ -1,18 +1,23 @@
 import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-sender = "Private Person <from@example.com>"
-receiver = "A Test User <to@example.com>"
+def send_email(body_message):
+    sender = "Private Person <from@example.com>"
+    receiver = "A Test User <to@example.com>"
 
-message = f"""\
-Subject: Hi Mailtrap
-To: {receiver}
-From: {sender}
+    message = MIMEMultipart()
+    message["Subject"] = "Hi Mailtrap"
+    message["From"] = sender
+    message["To"] = receiver
 
-This is a test e-mail message."""
+    message.attach(MIMEText(body_message, "plain"))
 
-def send_email():
-    with smtplib.SMTP("sandbox.smtp.mailtrap.io", 2525) as server:
-        server.starttls()
-        server.login("800810f00fb35c", "ba90816a9d626b")
-        server.sendmail(sender, receiver, message)
-
+    try:
+        with smtplib.SMTP("sandbox.smtp.mailtrap.io", 2525) as server:
+            server.starttls()
+            server.login("ca8887fad0c242", "c5d694d4779fe9")
+            server.sendmail(sender, receiver, message.as_string())
+            # print("Email envoyé avec succès!")
+    except smtplib.SMTPException as e:
+        print(f"Erreur lors de l'envoi de l'email: {e}")

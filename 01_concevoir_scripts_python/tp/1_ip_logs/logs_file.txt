@@ -18,6 +18,8 @@
 2023-06-26 08:20:25, samuel_thomas, 192.168.1.190, login_attempt, SUCCESS
 2023-06-26 09:30:02, sophia_murphy, 192.168.1.200, access_granted, SUCCESS
 2023-06-26 10:40:49, thomas_anderson, 192.168.1.210, login_attempt, FAILED
+2023-06-26 15:35:49, jojo_lapin, 192.168.1.210, login_attempt, FAILED
+2023-06-26 01:22:55, jojo_la_sommure, 192.168.1.210, login_attempt, FAILED
 2023-06-26 11:55:17, victoria_clark, 192.168.1.220, access_denied, FAILED
 2023-06-26 13:10:45, william_white, 192.168.1.230, login_attempt, SUCCESS
 2023-06-26 15:40:22, yasmine_rodriguez, 192.168.1.250, login_attempt, FAILED
