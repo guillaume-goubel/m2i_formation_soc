@@ -5,9 +5,6 @@ from datetime import datetime
 from my_email import send_email
 
 logs_file = "log_file.txt"
-output_file = 'threats_detected.txt'
-now = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_file = f"threats/{now}_threats.txt"
 
 suspect_signatures = [
     (r"(?i)(\bOR\b|\bAND\b)\s*1\s*=\s*1", "SQL INJECTION: Suspicious Condition"),
@@ -52,16 +49,23 @@ def save_threats_to_file(threats, output_file):
 data = read_log_file(logs_file)
 
 while True:
+    
+    # DATA recovering
     threats_detected = check_threats(data, suspect_signatures)
 
-    # Transformer la liste en une chaîne de caractères
+    # DATA format
     body_message = ""
     for entry in threats_detected:
         body_message += f"{entry[0]} - {entry[1]} \\\n"
 
+    # MAIL 
     send_email(body_message)
+    
+    # SAVE
+    now = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = f"threats/{now}_threats.txt"
     save_threats_to_file(threats_detected, output_file)
 
-    time.sleep(3)
+    time.sleep(2)
     print("------Scanning on progress-------")
     time.sleep(7)
