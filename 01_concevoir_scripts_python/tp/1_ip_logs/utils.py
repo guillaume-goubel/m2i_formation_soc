@@ -19,10 +19,7 @@ def failed_attempt():
 
 def get_many_ip_failed_attempt(multiple_attempts=False, threshold=False):
 
-    # Lire les données de log dans un DataFrame pandas
     log_df = pd.read_csv(log_file_to_read, header=None, names=["timestamp", "user", "ip_address", "action", "status"])
-
-    # Supprimer les espaces en trop dans la colonne 'status'
     log_df['status'] = log_df['status'].str.strip()
 
     # Filtrer les tentatives échouées
@@ -42,9 +39,11 @@ def get_many_ip_failed_attempt(multiple_attempts=False, threshold=False):
     return report_df
 
 def get_graph(report_df):
-    # Créer un graphique des tentatives échouées par adresse IP
+
+    # !!!BAR ---------------
     plt.figure(figsize=(20, 12))
     plt.bar(report_df['ip_address'], report_df['ko_attempts'], color='skyblue')
+    
     plt.xlabel('Adresse IP')
     plt.ylabel('Nombre de tentatives échouées')
     plt.title('Nombre de tentatives échouées par adresse IP')
@@ -52,9 +51,22 @@ def get_graph(report_df):
     plt.tight_layout()
 
     # Sauvegarder le graphique dans un fichier
-    output_file = 'failed_attempt_ip_connexions.png'
+    output_file = 'failed_attempt_ip_connexions_bar.png'
     plt.savefig(output_file)
     print(f"Le graphique a été sauvegardé dans le fichier : {output_file}")
+
+    # !!!CAMEMBERT ---------------
+    plt.figure(figsize=(20, 12))
+    plt.pie(report_df['ko_attempts'], labels=report_df['ip_address'], autopct='%1.1f%%', startangle=140)
+
+    plt.title('Répartition des tentatives échouées par adresse IP')
+    plt.tight_layout()
+
+    # Sauvegarder le graphique dans un fichier
+    output_file = 'failed_attempt_ip_connexions_pie.png'
+    plt.savefig(output_file)
+    print(f"Le graphique a été sauvegardé dans le fichier : {output_file}")
+
 
 def create_alert_message(report_df):
     
@@ -62,7 +74,8 @@ def create_alert_message(report_df):
     
     # Itérer sur les lignes du DataFrame
     for index, row in report_df.iterrows():
-        # Manipuler chaque ligne comme un Series pandas
+        
+        # Manipuler chaque ligne comme une serie pandas
         ip_address = row['ip_address']
         ko_attempts = row['ko_attempts']
         first_attempt = row['first']

@@ -1,0 +1,71 @@
+TP : Gestion des Utilisateurs, Groupes, Permissions et Propriétaires sur
+Unix/Linux
+Consignes :
+Partie 1 : Création et Gestion des Utilisateurs et des Groupes
+>> adduser trezeguet
+>> groupadd france_98
+
+. Création d'un utilisateur avec un groupe spécifique :
+Créez un utilisateur nommé tpuser et ajoutez-le au groupe tpgroup.
+>> sudo usermod -aG france_98 trezeguet
+
+. Création d'un autre utilisateur avec useradd :
+Créez un utilisateur nommé tpuser2 avec un répertoire personnel et ajoutez-le au groupe
+tpgroup.
+>> adduser pires
+>> sudo usermod -aG france_98 pires
+
+. Ajout d'un groupe secondaire à un utilisateur existant :
+>> sudo usermod -aG france_98 pires
+
+
+Partie 2 : Connexion des Utilisateurs Créés
+. Connexion avec tpuser :
+Ouvrez une nouvelle session ou utilisez la commande su - pour basculer vers l'utilisateur
+tpuser.
+>> su - trezeguet
+
+Ouvrez une nouvelle session ou utilisez la commande su - pour basculer vers l'utilisateur
+tpuser2.
+>> su - pires
+
+Partie 3 : Manipulation des Permissions et du Propriétaire de Fichiers
+. Création de fichiers de test :
+En tant qu'utilisateur tpuser, créez un répertoire test et deux fichiers fichier1.txt et
+fichier2.txt.
+>> mkdir -m "test_formation"
+>> touch test_formation/file1.txt && touch test_formation/file2.txt
+
+. Changement du propriétaire et du groupe d'un fichier :
+Changez le propriétaire et le groupe de fichier1.txt pour tpuser2 et tpgroup.
+. Changement des permissions d'accès :
+Donnez des permissions de lecture, écriture et exécution au propriétaire, et des
+permissions de lecture aux autres utilisateurs pour fichier1.txt.
+PROFESSEUR : M.DA ROSBTS SIO BORDEAUX - LYCÉE GUSTAVE EIFFEL✦ 2 / 2 ✦
+. Changement des permissions récursivement :
+Appliquez des permissions récursives sur le répertoire test.
+. Changement du propriétaire et du groupe récursivement :
+Changez le propriétaire et le groupe de tout le contenu du répertoire test récursivement
+pour tpuser
+
+
+Partie 4 : Modification des Utilisateurs et des Groupes
+. Modification du répertoire personnel de l'utilisateur :
+Changez le répertoire personnel de tpuser vers /home/tpuser-new.
+. Modification du shell de l'utilisateur :
+Changez le shell de tpuser en /bin/zsh.
+. Changement du nom d'utilisateur :
+Changez le nom de tpuser en newtpuser.
+. Changement du groupe principal de l'utilisateur :
+Changez le groupe principal de tpuser en newgroup (après avoir créé le groupe
+newgroup).
+. Verrouillage et déverrouillage d'un compte utilisateur :
+Verrouillez puis déverrouillez le compte de tpuser.
+. Liste des groupes auxquels appartient un utilisateur :
+Affichez les groupes de tpuser.
+. Affichage des informations sur un utilisateur :
+Affichez les informations détaillées de tpuser.
+. Suppression d'un utilisateur et de son répertoire personnel :
+Supprimez tpuser et son répertoire personnel.
+. Suppression d'un groupe :
+Supprimez le groupe tpgroup.

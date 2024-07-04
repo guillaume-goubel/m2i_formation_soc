@@ -1,0 +1,61 @@
+
+Listez tous les fichiers et répertoires dans le répertoire /var/log.
+#cd /var/log
+
+Listez les fichiers avec des détails (permissions, propriétaire, taille, date de modification).
+#ls -l
+
+Affichez les fichiers cachés dans le répertoire /etc.
+#ls -la OU ll
+
+Listez les fichiers dans /home en format lisible par l'humain.
+#cd /home & ls -lah
+
+Changez de répertoire pour aller dans /var/log.
+#cd /var/log
+
+Retournez dans votre répertoire personnel.
+#cd ~
+
+Allez dans le répertoire parent de votre répertoire actuel.
+#cd ..
+
+Retournez dans le répertoire précédent.
+#cd -
+
+Créez un répertoire cybersec dans votre répertoire personnel
+# cd ~ & mkdir -m 775 cybersec
+
+Créez plusieurs répertoires en une seule commande : logs, reports, et scripts à l'intérieur de cybersec.
+# mkdir -p logs reports scripts
+
+Créez une structure de répertoires imbriqués 2024/january/week1 dans reports.
+# mkdir -p reports/2024/january/week1
+
+Créez un fichier vide  dans cybersec.
+# cd cybersec & touch readme.txt
+
+Créez plusieurs fichiers vides log1.txt, log2.txt, et log3.txt dans logs.
+# touch logs/log1.txt logs/log2.txt logs/log3.txt
+
+Copiez readme.txt dans le répertoire scripts.
+# cp readme.txt scripts/readme.txt
+
+Copiez tous les fichiers .txt de logs vers reports/2024/january/week1.
+# cp logs/* reports/2024/january/week1
+
+Déplacez log1.txt de logs vers scripts et renommez-le en script_log1.txt.
+# mv logs/log1.txt scripts/script_log1.txt
+
+Renommez readme.txt en README.md
+# mv readme.txt README.md
+
+Supprimez le fichier log2.txt dans logs.
+# rm log2.txt
+
+Supprimez le répertoire week1 et tout son contenu.
+# rm -r reports/2024/january
+
+Supprimez tous les fichiers .txt dans logs.
+# rm logs/*.txt
+
