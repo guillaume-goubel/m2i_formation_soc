@@ -1,0 +1,52 @@
+TP1: commandes Linux
+
+Partie 1 : Navigation et Inspection
+
+Lister les fichiers et répertoires
+
+Listez tous les fichiers et répertoires dans le répertoire /var/log.
+Listez les fichiers avec des détails (permissions, propriétaire, taille, date de modification).
+Affichez les fichiers cachés dans le répertoire /etc.
+Listez les fichiers dans /home en format lisible par l'humain.
+
+Changer de répertoire
+
+Changez de répertoire pour aller dans /var/log.
+Retournez dans votre répertoire personnel.
+Allez dans le répertoire parent de votre répertoire actuel.
+Retournez dans le répertoire précédent.
+
+Partie 2 : Création et Gestion de Répertoires
+
+Créer des répertoires
+
+Créez un répertoire cybersec dans votre répertoire personnel.
+Créez plusieurs répertoires en une seule commande : logs, reports, et scripts à l'intérieur de cybersec.
+Créez une structure de répertoires imbriqués 2024/january/week1 dans reports.
+
+Partie 3 : Création et Gestion de Fichiers
+
+Créer des fichiers
+
+Créez un fichier vide readme.txt dans cybersec.
+Créez plusieurs fichiers vides log1.txt, log2.txt, et log3.txt dans logs.
+Créez un fichier avec une date spécifique.
+
+Partie 4 : Manipulation de Fichiers et Répertoires
+
+Copier des fichiers
+
+Copiez readme.txt dans le répertoire scripts.
+Copiez tous les fichiers .txt de logs vers reports/2024/january/week1.
+Déplacer et renommer des fichiers
+
+Déplacez log1.txt de logs vers scripts et renommez-le en script_log1.txt.
+Renommez readme.txt en README.md.
+
+Partie 5 : Suppression de Fichiers et Répertoires
+
+Supprimer des fichiers et répertoires
+
+Supprimez le fichier log2.txt dans logs.
+Supprimez le répertoire week1 et tout son contenu.
+Supprimez tous les fichiers .txt dans logs.
